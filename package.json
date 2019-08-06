@@ -1,0 +1,15 @@
+{
+  "name": "genericlambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lambda:build": "mkdir -p tmp; cp -r {*.js,package.json,data} tmp; cd tmp; rm -f ../generic-lambda.zip; zip -r --symlinks ../generic-lambda.zip *; cd ../; rm -rf tmp",
+    "lambda:upload": "aws s3 cp generic-lambda.zip s3://generic-lambda-functions/generic-lambda.zip",
+    "lambda:update": "aws lambda update-function-code --function-name generic-lambda",
+    "publish:lambda": "npm run lambda:build && npm run lambda:upload && npm run lambda:update "
+  },
+  "author": "Thomas Doyle",
+  "license": "ISC"
+}
